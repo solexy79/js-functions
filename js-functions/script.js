@@ -2,50 +2,7 @@
 
 
 
-// let Time =document.querySelector('#alarmTime')
-// const alarmBtn = document.querySelector('.alarm-modal button')
-// alarmBtn.addEventListener('click', setAlarm)
-
-// function setAlarm(){
-//   var ms = Time.valueAsNumber
-//   console.log(ms)
-//   if(isNaN(ms)){
-//     alert('Invalid Date')
-//     return;
-//   }
-//   var alarm  = new Date(ms);
-//   console.log(alarm)
-
-//   var alarmTime = new Date (alarm.getUTCFullYear(), alarm.getUTCMonth(), alarm.getUTCDate(), alarm.getUTCHours(), alarm.getUTCMinutes(), alarm.getUTCSeconds());
-
-//   console.log(alarmTime);
-
-//   var diff = alarmTime.getTime() -(new Date()).getTime();
-
-//   console.log(diff);
-
-//   if(diff < 0){
-//     alert("its time");
-//     return;
-//   }
-  
-//   setTimeout(initAlarm, diff);
-// }
-
-// function initAlarm(){
-//   alarmSound.play()
-//   document.getElementById('alarmOptions').style.display = '';
-// }
-
-// function stopAlarm(){
-//   alarmSound.pause();
-//   alarmSound.currentTime = 0;
-//   document.getElementById('alarmOptions').style.display = 'none';
-
-// };
-
-
-function setDate(){
+/function setDate(){
   var todayDate = document.querySelector('.date')
 
   let day;
@@ -101,31 +58,6 @@ function setDate(){
 setDate();
 
 
-// ALARM CONTROLLER
-var alarmController = (function(){
-  
-  var Alarms = function(value){
-    this.value = value;
-  }
-  
-  var allAlarms = [];
-  
-  
-
-  return{
-    addAlarm: function(val){
-      var newAlarm;
-
-      newAlarm = new Alarms(val)
-
-      allAlarms.push(newAlarm)
-      return newAlarm;
-    },
-    testing: function(){
-      console.log(allAlarms[0]);
-    }
-  }
-})();
 
 
 // ANALOGCLOCK CONTROLLER
@@ -187,6 +119,74 @@ var digitalClock = (function(){
   }  
 })();
 
+// ALARM CONTROLLER
+var alarmController = (function(){
+  
+  var Alarms = function(value){
+    this.value = value;
+  }
+  
+  var allAlarms = [];
+  
+  
+
+  return{
+    addAlarm: function(val){
+      var newAlarm;
+
+      newAlarm = new Alarms(val)
+
+      allAlarms.push(newAlarm)
+      return newAlarm;
+    },
+    testing: function(){
+      var alarmSound = document.querySelector('[data-sound]')
+      for(let i=0 ; i<allAlarms.length; i++){
+        if(isNaN(allAlarms[i].value)){
+            alert('Invalid Date')
+            return;
+          }
+          var alarm  = new Date(allAlarms[i].value);
+          console.log(alarm)
+          
+          var alarmTime = new Date (alarm.getUTCFullYear(), alarm.getUTCMonth(), alarm.getUTCDate(), alarm.getUTCHours(), alarm.getUTCMinutes(), alarm.getUTCSeconds());
+          
+          console.log(alarmTime);
+          
+          var diff = alarmTime.getTime() -(new Date()).getTime();
+          
+          console.log(diff);
+          
+          if(diff < 0){
+            alert("its time");
+            return;
+          }
+            
+            setTimeout(initAlarm, diff);
+          }
+          
+          function initAlarm(){
+            alarmSound.play()
+            document.getElementById('alarmOptions').style.display = '';
+          }
+
+          document.querySelector('.stop-alarm').addEventListener('click', stopAlarm)
+          
+          function stopAlarm() {
+            alarmSound.pause();
+            alarmSound.currentTime = 0;
+            document.getElementById('alarmOptions').style.display = 'none';
+          }
+
+          function snooze(){
+            stopAlarm();
+            setTimeout(initAlarm, 36000);
+          }
+    }
+  }
+})();
+
+
 
 // USER INTERFACE CONTROLLER
 var UIController = (function(){
@@ -221,6 +221,7 @@ var controller = (function(alarmCtrl, UICtrl){
   var setupEventListeners = function(){
     var DOM = UICtrl.getDOMstrings();
 
+    //2. add event-listerner to the set alarm button
     document.querySelector(DOM.alarmBtn).addEventListener('click', ctrlAddAlarm)
   }
 
@@ -230,9 +231,6 @@ var controller = (function(alarmCtrl, UICtrl){
     var input, newAlarm;
 
     //1. Open the modal 
-
-
-    //2. add event-listerner to the set alarm button
 
     //3. Get the set date and time for alarm 
 
@@ -250,7 +248,7 @@ var controller = (function(alarmCtrl, UICtrl){
     //7.  sound the alarm
 
     //8. stop the alarm
-
+    alarmCtrl.testing();
     //9. snooze the alarm
 
   };

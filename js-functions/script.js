@@ -1,8 +1,73 @@
+// DARK MODE SCRIPT
+document.querySelector('#darkMode').addEventListener('click', () => {
+  document.querySelector('body').classList.toggle('change');
+  document.querySelector('.analog-clock').classList.toggle('change');
+  document.querySelector('#time').classList.toggle('change');
+  document.querySelector('.date').classList.toggle('change');
+})
 
 
 
+// ANALOGCLOCK CONTROLLER
+var analogClockController = (function(){
+  setInterval(setClock, 1000)
+ 
+ const hourHand = document.querySelector('[data-hour-hand');
+ const minuteHand = document.querySelector('[data-minute-hand');
+ const secondHand = document.querySelector('[data-second-hand');
+ 
+ function setClock (){
+   const currentDate = new Date()
+   const secondsRatio = currentDate.getSeconds() / 60
+   const minutesRatio = (secondsRatio + currentDate.getMinutes()) / 60
+   const hoursRatio = (minutesRatio + currentDate.getHours()) / 12
+   setRotation(secondHand, secondsRatio)
+   setRotation(minuteHand, minutesRatio)
+   setRotation(hourHand, hoursRatio)
+ }
+ 
+ function setRotation( element, rotationRatio){
+   element.style.setProperty('--rotation', rotationRatio *360
+   )
+ }
+ setClock()
+ 
+ })();
+ 
+ 
+ // DIGITALCLOCK CONTROLLER
+ var digitalClock = (function(){
+   setInterval(digitalClock, 1000);
+   function digitalClock(){
+   var hour = document.getElementById("hour")
+   var minute = document.getElementById("minute")
+   var second = document.getElementById("second")
+ 
+   var h = new Date ().getHours();
+   var m = new Date().getMinutes();
+   var s = new Date().getSeconds();
+ 
+   if(h < 10){
+     hour.innerHTML = '0' + h + ':'
+   }else{
+     hour.innerHTML = h + ':'
+   }
+   if(m < 10){
+     minute.innerHTML = '0' + m + ':'
+   }else{
+     minute.innerHTML = m  + ':'
+   }
+   if(s < 10){
+     second.innerHTML = '0' + s 
+   }else{
+     second.innerHTML = s
+   }
+   }  
+ })();
 
-function setDate(){
+
+//SET DATE
+ function setDate(){
   var todayDate = document.querySelector('.date')
 
   let day;
@@ -53,71 +118,9 @@ function setDate(){
   }
 
 
-  todayDate.innerHTML = `<h1>${new Date().getDate()} ${month}, ${day} ${new Date().getFullYear()}</h1>`;
+  todayDate.innerHTML = `${new Date().getDate()} ${month}, ${day} ${new Date().getFullYear()}`;
 }
 setDate();
-
-
-
-
-// ANALOGCLOCK CONTROLLER
-var analogClockController = (function(){
- setInterval(setClock, 1000)
-
-const hourHand = document.querySelector('[data-hour-hand');
-const minuteHand = document.querySelector('[data-minute-hand');
-const secondHand = document.querySelector('[data-second-hand');
-
-function setClock (){
-  const currentDate = new Date()
-  const secondsRatio = currentDate.getSeconds() / 60
-  const minutesRatio = (secondsRatio + currentDate.getMinutes()) / 60
-  const hoursRatio = (minutesRatio + currentDate.getHours()) / 12
-  setRotation(secondHand, secondsRatio)
-  setRotation(minuteHand, minutesRatio)
-  setRotation(hourHand, hoursRatio)
-}
-
-function setRotation( element, rotationRatio){
-  element.style.setProperty('--rotation', rotationRatio *360
-  )
-}
-setClock()
-
-})();
-
-
-// DIGITALCLOCK CONTROLLER
-var digitalClock = (function(){
-  setInterval(digitalClock, 1000);
-  function digitalClock(){
-  var hour = document.getElementById("hour")
-  var minute = document.getElementById("minute")
-  var second = document.getElementById("second")
-
-  var h = new Date ().getHours();
-  var m = new Date().getMinutes();
-  var s = new Date().getSeconds();
-
-  
-  if(h < 10){
-    hour.innerHTML = '0' + h + ':'
-  }else{
-    hour.innerHTML = h + ':'
-  }
-  if(m < 10){
-    minute.innerHTML = '0' + m + ':'
-  }else{
-    minute.innerHTML = m  + ':'
-  }
-  if(s < 10){
-    second.innerHTML = '0' + s 
-  }else{
-    second.innerHTML = s
-  }
-
-  }  
-})();
 
 // ALARM CONTROLLER
 var alarmController = (function(){
@@ -141,6 +144,7 @@ var alarmController = (function(){
     },
     testing: function(){
       var alarmSound = document.querySelector('[data-sound]')
+      
       for(let i=0 ; i<allAlarms.length; i++){
         if(isNaN(allAlarms[i].value)){
             alert('Invalid Date')
@@ -148,19 +152,21 @@ var alarmController = (function(){
           }
           var alarm  = new Date(allAlarms[i].value);
           console.log(alarm)
+
+          var html =document.querySelector('.alarms')
+    
+          //Create HTML string with placeholder text
+    
+          html.innerHTML +=`<p class="alarm-1">You have set an alarm for ${alarm}</p>`
           
           var alarmTime = new Date (alarm.getUTCFullYear(), alarm.getUTCMonth(), alarm.getUTCDate(), alarm.getUTCHours(), alarm.getUTCMinutes(), alarm.getUTCSeconds());
           
-          console.log(alarmTime);
-          
           var diff = alarmTime.getTime() -(new Date()).getTime();
           
-          console.log(diff);
-          
-          if(diff < 0){
-            alert("its time");
-            return;
-          }
+          // if(diff < 0){
+          //   alert("its time");
+          //   return;
+          // }
             
             setTimeout(initAlarm, diff);
           }
@@ -178,9 +184,11 @@ var alarmController = (function(){
             document.getElementById('alarmOptions').style.display = 'none';
           }
 
+          document.querySelector('.snooze-alarm').addEventListener('click', snooze)
+
           function snooze(){
             stopAlarm();
-            setTimeout(initAlarm, 36000);
+            setTimeout(initAlarm, 120000);
           }
     }
   }
@@ -203,9 +211,7 @@ var UIController = (function(){
       } 
     },
 
-    addnewAlarm: function (obj) {
-      
-    },
+    
 
     getDOMstrings: function(){
       return DOMstrings;
@@ -214,6 +220,11 @@ var UIController = (function(){
   
 })();
 
+//TIMER
+
+  
+
+  
 
 // GLOBAL APP CONTROLLER
 var controller = (function(alarmCtrl, UICtrl){
@@ -236,7 +247,7 @@ var controller = (function(alarmCtrl, UICtrl){
 
     input = UICtrl.getinput();
 
-    //4 add alarm to the alarm controlle
+    //4 add alarm to the alarm controller
 
     newAlarm = alarmCtrl.addAlarm(input.value)
 
@@ -260,10 +271,9 @@ var controller = (function(alarmCtrl, UICtrl){
     }
   }
 
-  
-
 
   
 })(alarmController, UIController );
 
 controller.init();
+ 

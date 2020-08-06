@@ -1,0 +1,77 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  font-size: 62.5%;
+}
+
+.analog-clock{
+  width: 20rem;
+  height: 20rem;
+  background: #C4C4C4;
+  border-radius: 50%;
+  border: 1px solid #000;
+  position: relative;
+}
+
+.clock-hand{
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: 10px;
+  height: 40%;
+  background: #000;
+  border: 1px solid white;
+  border-radius:10px 10px 0 0;
+  transform-origin: bottom;
+  z-index: 2;
+  transform: translateX(-50%) rotate(calc(var(--rotation) * 1deg))
+}
+
+.analog-clock::after{
+  content: ' ';
+  position: absolute;
+  background: #000;
+  z-index: 3;
+  height: 15px;
+  width: 15px;
+  top:50%;
+  left:50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.second{
+  --rotation: 30;
+  width: 3px;
+  height: 45%;
+  background: tomato;
+}
+
+.minute{
+  width: 7px;
+  height: 40%;
+  background: black;
+}
+
+.hour{
+  width: 10px;
+  height: 35%;
+  background: black;
+}
+
+.digital-clock{
+  position: relative;
+  text-align: center;
+  margin: 1rem 0;
+  font-size: 5rem;
+}
+
+#time{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

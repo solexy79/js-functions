@@ -2,7 +2,7 @@
 
 
 
-/function setDate(){
+function setDate(){
   var todayDate = document.querySelector('.date')
 
   let day;

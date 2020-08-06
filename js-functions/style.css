@@ -35,18 +35,14 @@ a:hover {
 
 /* dark mode  */
 .dark-mode{
-    position: absolute;
-    top: 0;
-    left: 50%;
-    margin: 2rem 0;
     width: 150px;
     font-size: .8rem ;
     font-weight: 600;
+    margin: 1rem auto 0 ; 
     display: flex;
     color: hsl(230, 22%, 74%);
     justify-content: space-evenly;
-    align-items: center; 
-    transform: translateX(-50%);
+    align-items: center;
     z-index: 2; 
 }
 
@@ -198,12 +194,12 @@ font-size: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1rem;
     margin-top: 3rem;
 }
 
 #alarmTime{
-    margin-right: 2rem;
+    margin-right: .5rem;
 }
 
 .add-alarm{

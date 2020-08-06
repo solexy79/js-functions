@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="bootstrap/bootstrapCSS.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <title>Timer</title>
+</head>
+<body>
+    <header id="selection">
+        <a href="index.html">Alarm</a>
+        <a href="timer.html" class="active">Timer</a>
+    </header>
+    <div id="timer-circle">
+        <div id="timer">
+            <p id="timer-digit">41:06 <span id="seconds">99</span></p>
+        </div>
+    </div>
+    <div id="reload-and-pause">
+        <div id="reload">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-clockwise" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M3.17 6.706a5 5 0 0 1 7.103-3.16.5.5 0 1 0 .454-.892A6 6 0 1 0 13.455 5.5a.5.5 0 0 0-.91.417 5 5 0 1 1-9.375.789z"/>
+            <path fill-rule="evenodd" d="M8.147.146a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 1 1-.707-.708L10.293 3 8.147.854a.5.5 0 0 1 0-.708z"/>
+            </svg>
+        </div>
+        <div id="pause">
+            <svg width="1em" height="0.7em" viewBox="0 0 16 16" class="bi bi-pause pause" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+            </svg>
+      </div>
+    </div>
+    
+    <script src="bootstrap/bootstrapJQuery.js"></script>
+    <script src="bootstrap/bootstrapPopperJS.js"></script>
+    <script src="bootstrap/bootstrapJS.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -36,9 +36,9 @@
         <button><i class="fas fa-plus"></i></button>
       </div>
 
-      <div id="alarmOptions">
+      <div id="alarmOptions" style="display: none;">
         <button onclick="snooze();">Snooze 10 minutes</button>
-        <button onclick="stopAlarm();">Stop alarm</button>
+        <button class="stop-alarm">Stop alarm</button>
       </div>
 
       <div class="alarm-modal">
@@ -50,6 +50,7 @@
 
     </section>
   </main>
+  <audio src="sounds/alarming.mp3" data-sound></audio>
 
   <script src="script.js"></script>
 </body>

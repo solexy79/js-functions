@@ -236,7 +236,7 @@ var controller = (function(alarmCtrl, UICtrl){
 
     input = UICtrl.getinput();
 
-    //4 add alarm to the alarm controller
+    //4 add alarm to the alarm controlle
 
     newAlarm = alarmCtrl.addAlarm(input.value)
 

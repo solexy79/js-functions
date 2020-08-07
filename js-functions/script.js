@@ -122,78 +122,57 @@ var analogClockController = (function(){
 }
 setDate();
 
+var alarmSound = document.querySelector('[data-sound]')
 // ALARM CONTROLLER
-var alarmController = (function(){
+function setAlarm(val){
   
-  var Alarms = function(value){
-    this.value = value;
-  }
-  
-  var allAlarms = [];
-  
-  
-
-  return{
-    addAlarm: function(val){
-      var newAlarm;
-
-      newAlarm = new Alarms(val)
-
-      allAlarms.push(newAlarm)
-      return newAlarm;
-    },
-    testing: function(){
-      var alarmSound = document.querySelector('[data-sound]')
-      
-      for(let i=0 ; i<allAlarms.length; i++){
-        if(isNaN(allAlarms[i].value)){
-            alert('Invalid Date')
-            return;
-          }
-          var alarm  = new Date(allAlarms[i].value);
-          console.log(alarm)
-
-          var html =document.querySelector('.alarms')
-    
-          //Create HTML string with placeholder text
-    
-          html.innerHTML +=`<p class="alarm-1">You have set an alarm for ${alarm}</p>`
-          
-          var alarmTime = new Date (alarm.getUTCFullYear(), alarm.getUTCMonth(), alarm.getUTCDate(), alarm.getUTCHours(), alarm.getUTCMinutes(), alarm.getUTCSeconds());
-          
-          var diff = alarmTime.getTime() -(new Date()).getTime();
-          
-          // if(diff < 0){
-          //   alert("its time");
-          //   return;
-          // }
-            
-            setTimeout(initAlarm, diff);
-          }
-          
-          function initAlarm(){
-            alarmSound.play()
-            document.getElementById('alarmOptions').style.display = '';
-          }
-
-          document.querySelector('.stop-alarm').addEventListener('click', stopAlarm)
-          
-          function stopAlarm() {
-            alarmSound.pause();
-            alarmSound.currentTime = 0;
-            document.getElementById('alarmOptions').style.display = 'none';
-          }
-
-          document.querySelector('.snooze-alarm').addEventListener('click', snooze)
-
-          function snooze(){
-            stopAlarm();
-            setTimeout(initAlarm, 120000);
-          }
+  if(isNaN(val)){
+      alert('Invalid Date')
+      return;
     }
-  }
-})();
+    var alarm  = new Date(val);
+    console.log(alarm)
+    
 
+      
+      
+      var alarmTime = new Date (alarm.getUTCFullYear(), alarm.getUTCMonth(), alarm.getUTCDate(), alarm.getUTCHours(), alarm.getUTCMinutes(), alarm.getUTCSeconds());
+      
+      var html =document.querySelector('.alarms')
+
+      //Create HTML string with placeholder text
+      html.innerHTML =`<p class="alarm-1">You have set an alarm for ${alarmTime}</p>`
+      var diff = alarmTime.getTime() -(new Date()).getTime();
+
+      if(diff < 0){
+        alert('time has already passed')
+        return;
+      }
+      
+      
+        
+        setTimeout(initAlarm, diff);
+      };
+      
+      function initAlarm(){
+        alarmSound.play()
+        document.getElementById('alarmOptions').style.display = '';
+      }
+
+      document.querySelector('.stop-alarm').addEventListener('click', stopAlarm)
+      function stopAlarm() {
+        
+        alarmSound.pause();
+        alarmSound.currentTime = 0;
+        document.getElementById('alarmOptions').style.display = 'none';
+      };
+
+      document.querySelector('.snooze-alarm').addEventListener('click', snooze) 
+      function snooze(){
+        
+        stopAlarm();
+        setTimeout(initAlarm, 120000);
+      };
 
 
 // USER INTERFACE CONTROLLER
@@ -210,24 +189,16 @@ var UIController = (function(){
         value: document.querySelector(DOMstrings.alarmInput).valueAsNumber
       } 
     },
-
-    
-
     getDOMstrings: function(){
       return DOMstrings;
     }
   }
   
 })();
-
-//TIMER
-
-  
-
   
 
 // GLOBAL APP CONTROLLER
-var controller = (function(alarmCtrl, UICtrl){
+var controller = (function( UICtrl){
 
   var setupEventListeners = function(){
     var DOM = UICtrl.getDOMstrings();
@@ -236,31 +207,14 @@ var controller = (function(alarmCtrl, UICtrl){
     document.querySelector(DOM.alarmBtn).addEventListener('click', ctrlAddAlarm)
   }
 
-  
-
   var ctrlAddAlarm = function(){
     var input, newAlarm;
-
-    //1. Open the modal 
-
-    //3. Get the set date and time for alarm 
 
     input = UICtrl.getinput();
 
     //4 add alarm to the alarm controller
 
-    newAlarm = alarmCtrl.addAlarm(input.value)
-
-    //5.add to the UI
-
-
-    //6. Calculate time for the alarm to go off
-
-    //7.  sound the alarm
-
-    //8. stop the alarm
-    alarmCtrl.testing();
-    //9. snooze the alarm
+    newAlarm = setAlarm(input.value)
 
   };
 
@@ -273,7 +227,7 @@ var controller = (function(alarmCtrl, UICtrl){
 
 
   
-})(alarmController, UIController );
+})( UIController );
 
 controller.init();
  
